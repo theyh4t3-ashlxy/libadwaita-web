@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ashley — gnome 50 / hyprland</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+
+<!-- GNOME 50 Shell Top Bar -->
+<header class="top-bar">
+    <div class="top-bar-section">
+        <div class="top-bar-item">activities</div>
+        <button id="reopen-pill" class="reopen-pill" data-action="reopen-window">
+            <span>●</span> ashley_os
+        </button>
+    </div>
+
+    <div class="top-bar-clock" id="clock">fetching...</div>
+
+    <div class="top-bar-section">
+        <div class="top-bar-item" title="Battery">
+            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2"><rect x="2" y="7" width="16" height="10" rx="2" ry="2"></rect><line x1="22" y1="11" x2="22" y2="13"></line></svg>
+            <span>79%</span>
+        </div>
+        <div class="top-bar-item" title="Network">
+            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
+        </div>
+        <div class="top-bar-item" title="Power">
+            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
+        </div>
+    </div>
+</header>
+
+<!-- Adwaita Window Application -->
+<main class="window" id="main-window">
+
+    <!-- Mobile Drawer Backdrop -->
+    <div class="mobile-overlay" id="mobile-overlay" data-action="toggle-sidebar"></div>
+
+    <!-- AdwNavigationSplitView Sidebar -->
+    <aside class="sidebar-container" id="sidebar">
+        <div class="headerbar sidebar-headerbar">
+            <span class="sidebar-title">ashley_os</span>
+            <span class="badge badge-blue">gnome 50</span>
+        </div>
+
+        <nav>
+            <button class="nav-item active" data-nav-target="profile">
+                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none"><circle cx="12" cy="8" r="4"></circle><path d="M4 20c0-4 4-7 8-7s8 3 8 7"></path></svg>
+                <span>profile</span>
+            </button>
+            <button class="nav-item" data-nav-target="projects">
+                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                <span>projects</span>
+            </button>
+            <button class="nav-item" data-nav-target="bugs">
+                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none"><rect x="8" y="6" width="8" height="14" rx="4"></rect><path d="M6 10h2m8 0h2m-10 4h2m8 0h2m-10 4h2m8 0h2M9 6V4m6 2V4"></path></svg>
+                <span>anomalies</span>
+            </button>
+        </nav>
+
+        <div class="sidebar-footer">
+            thinkpad t16 · linux 7.2.3-arch
+        </div>
+    </aside>
+
+    <!-- AdwNavigationSplitView Content -->
+    <section class="main-view">
+        <header class="headerbar content-headerbar" id="drag-handle">
+            <button class="hamburger" data-action="toggle-sidebar" aria-label="Toggle navigation">☰</button>
+            <div class="title" id="header-title">about ashley</div>
+            <div class="window-controls">
+                <button class="control" data-action="close-window" aria-label="Close window">
+                    <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+        </header>
+
+        <div class="content-area">
+
+            <!-- Profile View -->
+            <article id="profile" class="content-page active">
+                <div class="profile-banner">
+                    <div class="avatar-circle">👩‍💻</div>
+                    <h1 class="profile-name">ashley@lost</h1>
+                    <div class="profile-tag">
+                        <span>ThinkPad T16 Gen 1</span>
+                        <span>•</span>
+                        <span>Arch Linux x86_64</span>
+                    </div>
+                </div>
+
+                <div class="group-header">
+                    <div class="group-title">system configuration</div>
+                    <div class="group-description">actual hardware telemetry and running environment</div>
+                </div>
+
+                <div class="boxed-list">
+                    <div class="action-row">
+                        <div class="row-icon">
+                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                        </div>
+                        <div class="row-text">
+                            <div class="row-title">operating system</div>
+                            <div class="row-subtitle">Arch Linux (rolling) · pacman + flatpak</div>
+                        </div>
+                        <div class="row-suffix">
+                            <span class="badge badge-blue">archlinux</span>
+                        </div>
+                    </div>
+
+                    <div class="action-row">
+                        <div class="row-icon">
+                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+                        </div>
+                        <div class="row-text">
+                            <div class="row-title">shell & terminal</div>
+                            <div class="row-subtitle">zsh (/usr/bin/zsh) · custom prompt suite</div>
+                        </div>
+                        <div class="row-suffix">
+                            <span class="badge badge-green">zsh</span>
+                        </div>
+                    </div>
+
+                    <div class="action-row">
+                        <div class="row-icon">
+                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                        </div>
+                        <div class="row-text">
+                            <div class="row-title">kernel</div>
+                            <div class="row-subtitle">Linux 7.2.3-arch1-3</div>
+                        </div>
+                    </div>
+
+                    <div class="action-row">
+                        <div class="row-icon">
+                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                        </div>
+                        <div class="row-text">
+                            <div class="row-title">compositor</div>
+                            <div class="row-subtitle">Hyprland 0.56.2 (Wayland) + quickshell</div>
+                        </div>
+                        <div class="row-suffix">
+                            <span class="badge badge-purple">wayland</span>
+                        </div>
+                    </div>
+
+                    <div class="action-row">
+                        <div class="row-icon">
+                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+                        </div>
+                        <div class="row-text">
+                            <div class="row-title">hardware specs</div>
+                            <div class="row-subtitle">12th Gen Intel Core i7-1260P @ 4.70 GHz · 16 GB RAM</div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Projects View -->
+            <article id="projects" class="content-page">
+                <div class="group-header">
+                    <div class="group-title">active git repositories</div>
+                    <div class="group-description">real projects living in ~/Projects and dotfiles</div>
+                </div>
+
+                <div class="boxed-list">
+                    <div class="action-row">
+                        <div class="row-text">
+                            <div class="row-title">my-hyprland-dots</div>
+                            <div class="row-subtitle">hyprland dots: the hallucination edition. quickshell, pipewire, google material symbols, pure #000000.</div>
+                        </div>
+                        <div class="row-suffix">
+                            <span class="badge badge-blue">main</span>
+                            <a class="adw-pill" href="https://github.com/theyh4t3-ashlxy/my_hyprland_dots" target="_blank" rel="noreferrer">repo</a>
+                        </div>
+                    </div>
+
+                    <div class="action-row">
+                        <div class="row-text">
+                            <div class="row-title">fan-control</div>
+                            <div class="row-subtitle">thinkpad t16 hardware fan daemon and dbus service (org.thinkpad.FanControl).</div>
+                        </div>
+                        <div class="row-suffix">
+                            <span class="badge badge-green">daemon</span>
+                        </div>
+                    </div>
+
+                    <div class="action-row">
+                        <div class="row-text">
+                            <div class="row-title">keygen</div>
+                            <div class="row-subtitle">modular cryptographic engine with custom generators, patchers, and pyqt gui.</div>
+                        </div>
+                        <div class="row-suffix">
+                            <span class="badge badge-purple">python</span>
+                        </div>
+                    </div>
+
+                    <div class="action-row">
+                        <div class="row-text">
+                            <div class="row-title">roblox</div>
+                            <div class="row-subtitle">pls donate decompiled luau scripts, rbxl projects, and donation clone animations.</div>
+                        </div>
+                        <div class="row-suffix">
+                            <span class="badge badge-yellow">luau</span>
+                        </div>
+                    </div>
+
+                    <div class="action-row">
+                        <div class="row-text">
+                            <div class="row-title">rust</div>
+                            <div class="row-subtitle">rust 2024 edition crate. initialized august 12, currently 0 commits on master.</div>
+                        </div>
+                        <div class="row-suffix">
+                            <span class="badge badge-red">untouched</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Bugs / Anomalies View -->
+            <article id="bugs" class="content-page">
+                <div class="group-header">
+                    <div class="group-title">git blame & anomalies</div>
+                    <div class="group-description">actual commit ledger history and unresolved issues</div>
+                </div>
+
+                <div class="boxed-list">
+                    <div class="action-row">
+                        <span class="status-dot green"></span>
+                        <div class="row-text">
+                            <div class="row-title">err_recursive_binding_loop</div>
+                            <div class="row-subtitle">eradicated 50+ recursive qml binding loops in wallpaper browser before cpu melted.</div>
+                        </div>
+                        <div class="row-suffix">
+                            <span class="badge badge-green">237bbd9</span>
+                        </div>
+                    </div>
+
+                    <div class="action-row">
+                        <span class="status-dot green"></span>
+                        <div class="row-text">
+                            <div class="row-title">err_bar_studio_homicide</div>
+                            <div class="row-subtitle">stopped bar studio instances from murdering each other on multi-monitor setups.</div>
+                        </div>
+                        <div class="row-suffix">
+                            <span class="badge badge-green">c7cba32</span>
+                        </div>
+                    </div>
+
+                    <div class="action-row">
+                        <span class="status-dot green"></span>
+                        <div class="row-text">
+                            <div class="row-title">err_ghost_pixels</div>
+                            <div class="row-subtitle">app launcher no longer renders at 0x0 invisible ghost pixels in the shadow realm.</div>
+                        </div>
+                        <div class="row-suffix">
+                            <span class="badge badge-green">resolved</span>
+                        </div>
+                    </div>
+
+                    <div class="action-row">
+                        <span class="status-dot red"></span>
+                        <div class="row-text">
+                            <div class="row-title">err_abandoned_crate</div>
+                            <div class="row-subtitle">rust crate sitting in ~/Projects/rust with zero commits since august. untouched side project graveyard.</div>
+                        </div>
+                        <div class="row-suffix">
+                            <span class="badge badge-red">skill issue</span>
+                        </div>
+                    </div>
+
+                    <div class="action-row">
+                        <span class="status-dot yellow"></span>
+                        <div class="row-text">
+                            <div class="row-title">err_low_caffeine</div>
+                            <div class="row-subtitle">cognitive function impaired. cold brew level critical. refill required.</div>
+                        </div>
+                        <div class="row-suffix">
+                            <span class="badge badge-yellow">open</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+</main>
+
+</body>
+</html>
