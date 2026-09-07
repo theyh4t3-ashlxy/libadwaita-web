@@ -1,6 +1,6 @@
 /**
  * ashley_os desktop controller
- * libadwaita-compliant window manager and navigation
+ * libadwaita-compliant window manager, navigation, and expander rows
  */
 
 (() => {
@@ -31,14 +31,15 @@
 
     // Navigation and view switching
     const Navigation = {
-        titles: {
-            profile: 'about ashley',
-            projects: 'active repositories',
-            bugs: 'anomalies & git blame'
+        meta: {
+            profile: { title: 'about ashley', subtitle: 'thinkpad t16 · hardware & platform' },
+            projects: { title: 'active repositories', subtitle: 'github & local projects' },
+            bugs: { title: 'anomalies & git blame', subtitle: 'commit ledger & issues' }
         },
         sidebar: document.getElementById('sidebar'),
         overlay: document.getElementById('mobile-overlay'),
         headerTitle: document.getElementById('header-title'),
+        headerSubtitle: document.getElementById('header-subtitle'),
         navItems: document.querySelectorAll('.nav-item'),
         pages: document.querySelectorAll('.content-page'),
 
@@ -52,6 +53,13 @@
 
                 if (event.target.closest('[data-action="toggle-sidebar"]')) {
                     this.toggleSidebar();
+                }
+
+                // AdwExpanderRow toggle
+                const expanderHeader = event.target.closest('.expander-header');
+                if (expanderHeader) {
+                    const row = expanderHeader.closest('.expander-row');
+                    if (row) row.classList.toggle('open');
                 }
             });
         },
@@ -71,8 +79,10 @@
                 if (matchingBtn) matchingBtn.classList.add('active');
             }
 
-            if (this.headerTitle && this.titles[pageId]) {
-                this.headerTitle.textContent = this.titles[pageId];
+            const info = this.meta[pageId];
+            if (info) {
+                if (this.headerTitle) this.headerTitle.textContent = info.title;
+                if (this.headerSubtitle) this.headerSubtitle.textContent = info.subtitle;
             }
 
             if (window.innerWidth <= 768) {
@@ -139,7 +149,7 @@
 
         onPointerDown(e) {
             if (window.innerWidth <= 768) return;
-            if (e.target.closest('button') || e.target.closest('.control') || e.target.closest('.hamburger')) return;
+            if (e.target.closest('button') || e.target.closest('.control') || e.target.closest('.hamburger') || e.target.closest('a')) return;
 
             this.isDragging = true;
             this.startX = e.clientX - this.xOffset;

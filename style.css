@@ -5,20 +5,21 @@
     --view-bg-color: #1e1e1e;
     --window-fg-color: #ffffff;
     --text-color: #ffffff;
-    --text-dim: rgba(255, 255, 255, 0.55);
-    --text-muted: rgba(255, 255, 255, 0.35);
+    --text-dim: rgba(255, 255, 255, 0.65);
+    --text-muted: rgba(255, 255, 255, 0.40);
     --accent-bg-color: #3584e4;
     --accent-hover-color: #4791eb;
     --card-bg-color: rgba(255, 255, 255, 0.05);
     --card-border-color: rgba(255, 255, 255, 0.08);
-    --hover-bg-color: rgba(255, 255, 255, 0.07);
-    --active-bg-color: rgba(255, 255, 255, 0.12);
+    --hover-bg-color: rgba(255, 255, 255, 0.08);
+    --active-bg-color: rgba(255, 255, 255, 0.14);
     --border-color: rgba(0, 0, 0, 0.36);
     --destructive-bg-color: #e01b24;
     --destructive-hover-color: #f66151;
     --success-color: #33d17a;
     --warning-color: #f6d32d;
     --border-radius: 12px;
+    --window-radius: 12px;
     --transition-speed: 0.2s;
     --adw-cubic: cubic-bezier(0.25, 1, 0.5, 1);
 }
@@ -49,16 +50,16 @@ body {
     left: 0;
     width: 100%;
     height: 36px;
-    background: rgba(0, 0, 0, 0.65);
-    backdrop-filter: blur(16px);
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(20px);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 14px;
+    padding: 0 12px;
     font-size: 13px;
     font-weight: 600;
     z-index: 100;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
     user-select: none;
 }
 
@@ -70,7 +71,7 @@ body {
 
 .top-bar-item {
     padding: 4px 10px;
-    border-radius: 14px;
+    border-radius: 16px;
     cursor: pointer;
     transition: background var(--transition-speed);
     display: flex;
@@ -82,6 +83,22 @@ body {
     background: var(--hover-bg-color);
 }
 
+/* GNOME Quick Settings Unified Capsule */
+.quick-settings-pill {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 4px 12px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background var(--transition-speed);
+}
+
+.quick-settings-pill:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
 .top-bar-clock {
     position: absolute;
     left: 50%;
@@ -89,6 +106,14 @@ body {
     font-weight: 700;
     font-size: 13px;
     letter-spacing: 0.2px;
+    cursor: pointer;
+    padding: 4px 12px;
+    border-radius: 16px;
+    transition: background var(--transition-speed);
+}
+
+.top-bar-clock:hover {
+    background: var(--hover-bg-color);
 }
 
 .reopen-pill {
@@ -111,14 +136,14 @@ body {
 
 /* Adwaita Window Frame */
 .window {
-    width: 960px;
-    height: 680px;
+    width: 980px;
+    height: 720px;
     background-color: var(--view-bg-color);
-    border-radius: var(--border-radius);
-    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--card-border-color);
+    border-radius: var(--window-radius);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.75), 0 0 0 1px var(--card-border-color);
     display: flex;
     position: relative;
-    animation: window-open 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+    animation: window-open 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
     will-change: transform, opacity;
     overflow: hidden;
     transition: opacity 0.25s ease, transform 0.25s ease;
@@ -171,7 +196,7 @@ body {
     height: 52px;
     display: flex;
     align-items: center;
-    padding: 0 12px;
+    padding: 0 14px;
     border-bottom: 1px solid var(--border-color);
     user-select: none;
 }
@@ -200,14 +225,26 @@ body {
     cursor: grabbing;
 }
 
-.title {
-    font-weight: 700;
-    font-size: 14px;
-    pointer-events: none;
+.title-widget {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 14px;
     letter-spacing: -0.2px;
+}
+
+.title-subtitle {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 500;
 }
 
 .window-controls {
@@ -320,7 +357,7 @@ nav {
     flex: 1;
     overflow-y: auto;
     position: relative;
-    padding: 32px 40px;
+    padding: 28px 40px 48px;
 }
 
 .content-page {
@@ -328,7 +365,7 @@ nav {
     opacity: 0;
     transform: translateX(16px);
     transition: opacity 0.22s ease, transform 0.22s ease;
-    max-width: 600px;
+    max-width: 640px;
     margin: 0 auto;
 }
 
@@ -439,6 +476,80 @@ nav {
     flex-shrink: 0;
 }
 
+/* AdwExpanderRow Implementation */
+.expander-row {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.expander-row:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 16px;
+    right: 16px;
+    height: 1px;
+    background: var(--card-border-color);
+}
+
+.expander-header {
+    padding: 13px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: background var(--transition-speed);
+    user-select: none;
+}
+
+.expander-header:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.expander-arrow {
+    transition: transform var(--transition-speed);
+    opacity: 0.6;
+}
+
+.expander-row.open .expander-arrow {
+    transform: rotate(90deg);
+}
+
+.expander-body {
+    display: none;
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid var(--card-border-color);
+    padding: 8px 16px 8px 48px;
+}
+
+.expander-row.open .expander-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.sub-row {
+    padding: 8px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.sub-row:last-child {
+    border-bottom: none;
+}
+
+.sub-key {
+    color: var(--text-dim);
+}
+
+.sub-val {
+    color: var(--text-color);
+    font-family: monospace;
+}
+
 /* Adwaita Buttons and Pills */
 .adw-pill {
     background: var(--active-bg-color);
@@ -451,6 +562,9 @@ nav {
     cursor: pointer;
     transition: background var(--transition-speed), border-color var(--transition-speed);
     text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .adw-pill:hover {
@@ -505,7 +619,7 @@ nav {
 /* Profile Header Section */
 .profile-banner {
     text-align: center;
-    padding: 12px 0 28px;
+    padding: 8px 0 24px;
 }
 
 .avatar-circle {
@@ -589,7 +703,7 @@ nav {
     }
 
     .content-area {
-        padding: 24px 16px;
+        padding: 24px 16px 40px;
     }
 }
 

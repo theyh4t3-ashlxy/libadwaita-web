@@ -21,15 +21,16 @@
     <div class="top-bar-clock" id="clock">fetching...</div>
 
     <div class="top-bar-section">
-        <div class="top-bar-item" title="Battery">
-            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2"><rect x="2" y="7" width="16" height="10" rx="2" ry="2"></rect><line x1="22" y1="11" x2="22" y2="13"></line></svg>
-            <span>79%</span>
-        </div>
-        <div class="top-bar-item" title="Network">
+        <div class="quick-settings-pill" title="Quick Settings">
+            <!-- Wi-Fi icon -->
             <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
-        </div>
-        <div class="top-bar-item" title="Power">
-            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
+            <!-- Volume icon -->
+            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+            <!-- Battery icon -->
+            <span style="display: inline-flex; align-items: center; gap: 4px;">
+                <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2"><rect x="2" y="7" width="16" height="10" rx="2" ry="2"></rect><line x1="22" y1="11" x2="22" y2="13"></line></svg>
+                <span>79%</span>
+            </span>
         </div>
     </div>
 </header>
@@ -44,17 +45,17 @@
     <aside class="sidebar-container" id="sidebar">
         <div class="headerbar sidebar-headerbar">
             <span class="sidebar-title">ashley_os</span>
-            <span class="badge badge-blue">gnome 50</span>
+            <span class="badge badge-blue">gnome 50 HIG</span>
         </div>
 
         <nav>
             <button class="nav-item active" data-nav-target="profile">
                 <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none"><circle cx="12" cy="8" r="4"></circle><path d="M4 20c0-4 4-7 8-7s8 3 8 7"></path></svg>
-                <span>profile</span>
+                <span>profile & telemetry</span>
             </button>
             <button class="nav-item" data-nav-target="projects">
                 <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
-                <span>projects</span>
+                <span>github projects</span>
             </button>
             <button class="nav-item" data-nav-target="bugs">
                 <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none"><rect x="8" y="6" width="8" height="14" rx="4"></rect><path d="M6 10h2m8 0h2m-10 4h2m8 0h2m-10 4h2m8 0h2M9 6V4m6 2V4"></path></svg>
@@ -63,7 +64,7 @@
         </nav>
 
         <div class="sidebar-footer">
-            thinkpad t16 · linux 7.2.3-arch
+            thinkpad t16 · inxi telemetry · libadwaita
         </div>
     </aside>
 
@@ -71,7 +72,10 @@
     <section class="main-view">
         <header class="headerbar content-headerbar" id="drag-handle">
             <button class="hamburger" data-action="toggle-sidebar" aria-label="Toggle navigation">☰</button>
-            <div class="title" id="header-title">about ashley</div>
+            <div class="title-widget">
+                <span class="title" id="header-title">about ashley</span>
+                <span class="title-subtitle" id="header-subtitle">thinkpad t16 · hardware & platform</span>
+            </div>
             <div class="window-controls">
                 <button class="control" data-action="close-window" aria-label="Close window">
                     <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -81,21 +85,21 @@
 
         <div class="content-area">
 
-            <!-- Profile View -->
+            <!-- Profile & Granular Inxi Telemetry View -->
             <article id="profile" class="content-page active">
                 <div class="profile-banner">
                     <div class="avatar-circle">👩‍💻</div>
                     <h1 class="profile-name">ashley@lost</h1>
                     <div class="profile-tag">
-                        <span>ThinkPad T16 Gen 1</span>
+                        <span>ThinkPad T16 Gen 1 (21BWS23200)</span>
                         <span>•</span>
                         <span>Arch Linux x86_64</span>
                     </div>
                 </div>
 
                 <div class="group-header">
-                    <div class="group-title">system configuration</div>
-                    <div class="group-description">actual hardware telemetry and running environment</div>
+                    <div class="group-title">system & firmware</div>
+                    <div class="group-description">granular telemetry queried via inxi -Fxz</div>
                 </div>
 
                 <div class="boxed-list">
@@ -104,8 +108,8 @@
                             <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                         </div>
                         <div class="row-text">
-                            <div class="row-title">operating system</div>
-                            <div class="row-subtitle">Arch Linux (rolling) · pacman + flatpak</div>
+                            <div class="row-title">kernel & compiler</div>
+                            <div class="row-subtitle">Linux 7.2.3-arch1-3 (x86_64) · GCC 16.2.1 · Arch rolling</div>
                         </div>
                         <div class="row-suffix">
                             <span class="badge badge-blue">archlinux</span>
@@ -114,34 +118,11 @@
 
                     <div class="action-row">
                         <div class="row-icon">
-                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
-                        </div>
-                        <div class="row-text">
-                            <div class="row-title">shell & terminal</div>
-                            <div class="row-subtitle">zsh (/usr/bin/zsh) · custom prompt suite</div>
-                        </div>
-                        <div class="row-suffix">
-                            <span class="badge badge-green">zsh</span>
-                        </div>
-                    </div>
-
-                    <div class="action-row">
-                        <div class="row-icon">
-                            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                        </div>
-                        <div class="row-text">
-                            <div class="row-title">kernel</div>
-                            <div class="row-subtitle">Linux 7.2.3-arch1-3</div>
-                        </div>
-                    </div>
-
-                    <div class="action-row">
-                        <div class="row-icon">
                             <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
                         </div>
                         <div class="row-text">
-                            <div class="row-title">compositor</div>
-                            <div class="row-subtitle">Hyprland 0.56.2 (Wayland) + quickshell</div>
+                            <div class="row-title">desktop & compositor</div>
+                            <div class="row-subtitle">Hyprland 0.56.2 (Wayland) + Xwayland 24.1.13 · quickshell</div>
                         </div>
                         <div class="row-suffix">
                             <span class="badge badge-purple">wayland</span>
@@ -153,8 +134,70 @@
                             <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
                         </div>
                         <div class="row-text">
-                            <div class="row-title">hardware specs</div>
-                            <div class="row-subtitle">12th Gen Intel Core i7-1260P @ 4.70 GHz · 16 GB RAM</div>
+                            <div class="row-title">uefi & firmware</div>
+                            <div class="row-subtitle">LENOVO v: N3BET70W (1.48) date: 05/14/2026</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group-header">
+                    <div class="group-title">processor & graphics (inxi)</div>
+                    <div class="group-description">alder lake compute and dual hybrid gpus</div>
+                </div>
+
+                <div class="boxed-list">
+                    <!-- Expander Row for CPU -->
+                    <div class="expander-row open">
+                        <div class="expander-header">
+                            <svg class="expander-arrow" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            <div class="row-text">
+                                <div class="row-title">12th Gen Intel Core i7-1260P</div>
+                                <div class="row-subtitle">12-core (4 P-cores + 8 E-cores, 16 threads) · 4.70 GHz peak</div>
+                            </div>
+                            <span class="badge badge-green">18 MiB L3</span>
+                        </div>
+                        <div class="expander-body">
+                            <div class="sub-row"><span class="sub-key">architecture:</span><span class="sub-val">Alder Lake-P (rev 3)</span></div>
+                            <div class="sub-row"><span class="sub-key">cache sizes:</span><span class="sub-val">L1: 1.1 MiB · L2: 9 MiB · L3: 18 MiB</span></div>
+                            <div class="sub-row"><span class="sub-key">clock speeds:</span><span class="sub-val">400 MHz min / 4700 MHz boost</span></div>
+                            <div class="sub-row"><span class="sub-key">bogomips:</span><span class="sub-val">79872</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Expander Row for Dual GPUs -->
+                    <div class="expander-row">
+                        <div class="expander-header">
+                            <svg class="expander-arrow" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            <div class="row-text">
+                                <div class="row-title">hybrid dual graphics</div>
+                                <div class="row-subtitle">Intel Iris Xe (i915) + NVIDIA GeForce MX550 [TU117M]</div>
+                            </div>
+                            <span class="badge badge-purple">dual gpu</span>
+                        </div>
+                        <div class="expander-body">
+                            <div class="sub-row"><span class="sub-key">integrated:</span><span class="sub-val">Intel Alder Lake-P GT2 (i915 / iris)</span></div>
+                            <div class="sub-row"><span class="sub-key">discrete:</span><span class="sub-val">NVIDIA GeForce MX550 (driver 610.57.04)</span></div>
+                            <div class="sub-row"><span class="sub-key">opengl api:</span><span class="sub-val">Mesa 26.2.2-arch1.1 (OpenGL 4.6.0)</span></div>
+                            <div class="sub-row"><span class="sub-key">displays:</span><span class="sub-val">1: 1920x1080 · 2: 1920x1200</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Expander Row for Storage & Sensors -->
+                    <div class="expander-row">
+                        <div class="expander-header">
+                            <svg class="expander-arrow" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            <div class="row-text">
+                                <div class="row-title">storage, battery & thermals</div>
+                                <div class="row-subtitle">Samsung NVMe Btrfs · 79% battery · 64°C · 3070 RPM fan</div>
+                            </div>
+                            <span class="badge badge-yellow">inxi sensors</span>
+                        </div>
+                        <div class="expander-body">
+                            <div class="sub-row"><span class="sub-key">primary nvme:</span><span class="sub-val">Samsung MZVL4512HBLU 476.94 GiB (47.9°C)</span></div>
+                            <div class="sub-row"><span class="sub-key">filesystem:</span><span class="sub-val">Btrfs (root/home/var) + 4 GiB zram</span></div>
+                            <div class="sub-row"><span class="sub-key">external ssd:</span><span class="sub-val">Seagate One Touch 931.51 GiB (ntfs3)</span></div>
+                            <div class="sub-row"><span class="sub-key">battery health:</span><span class="sub-val">34 Wh (79%) · 82% condition (SMP 5B10W51869)</span></div>
+                            <div class="sub-row"><span class="sub-key">thermal & fan:</span><span class="sub-val">CPU 64.0°C · Fan: 3070 RPM</span></div>
                         </div>
                     </div>
                 </div>
@@ -163,59 +206,74 @@
             <!-- Projects View -->
             <article id="projects" class="content-page">
                 <div class="group-header">
-                    <div class="group-title">active git repositories</div>
-                    <div class="group-description">real projects living in ~/Projects and dotfiles</div>
+                    <div class="group-title">github repositories (@theyh4t3-ashlxy)</div>
+                    <div class="group-description">projects published to github (roblox excluded)</div>
                 </div>
 
                 <div class="boxed-list">
                     <div class="action-row">
                         <div class="row-text">
-                            <div class="row-title">my-hyprland-dots</div>
+                            <div class="row-title">theyh4t3-ashlxy / my_hyprland_dots</div>
                             <div class="row-subtitle">hyprland dots: the hallucination edition. quickshell, pipewire, google material symbols, pure #000000.</div>
                         </div>
                         <div class="row-suffix">
                             <span class="badge badge-blue">main</span>
-                            <a class="adw-pill" href="https://github.com/theyh4t3-ashlxy/my_hyprland_dots" target="_blank" rel="noreferrer">repo</a>
+                            <a class="adw-pill" href="https://github.com/theyh4t3-ashlxy/my_hyprland_dots" target="_blank" rel="noreferrer">github ↗</a>
                         </div>
                     </div>
 
                     <div class="action-row">
                         <div class="row-text">
-                            <div class="row-title">fan-control</div>
+                            <div class="row-title">theyh4t3-ashlxy / fan-control</div>
                             <div class="row-subtitle">thinkpad t16 hardware fan daemon and dbus service (org.thinkpad.FanControl).</div>
                         </div>
                         <div class="row-suffix">
                             <span class="badge badge-green">daemon</span>
+                            <a class="adw-pill" href="https://github.com/theyh4t3-ashlxy/fan-control" target="_blank" rel="noreferrer">github ↗</a>
                         </div>
                     </div>
 
                     <div class="action-row">
                         <div class="row-text">
-                            <div class="row-title">keygen</div>
-                            <div class="row-subtitle">modular cryptographic engine with custom generators, patchers, and pyqt gui.</div>
+                            <div class="row-title">theyh4t3-ashlxy / keygen</div>
+                            <div class="row-subtitle">vaultforge: modular cryptographic engine with custom generators, patchers, and libadwaita gtk4 ui.</div>
                         </div>
                         <div class="row-suffix">
                             <span class="badge badge-purple">python</span>
+                            <a class="adw-pill" href="https://github.com/theyh4t3-ashlxy/keygen" target="_blank" rel="noreferrer">github ↗</a>
                         </div>
                     </div>
 
                     <div class="action-row">
                         <div class="row-text">
-                            <div class="row-title">roblox</div>
+                            <div class="row-title">theyh4t3-ashlxy / rust</div>
+                            <div class="row-subtitle">smart fridge doom runner struct. rust 2024 edition crate finally with an initial commit.</div>
+                        </div>
+                        <div class="row-suffix">
+                            <span class="badge badge-green">committed</span>
+                            <a class="adw-pill" href="https://github.com/theyh4t3-ashlxy/rust" target="_blank" rel="noreferrer">github ↗</a>
+                        </div>
+                    </div>
+
+                    <div class="action-row">
+                        <div class="row-text">
+                            <div class="row-title">theyh4t3-ashlxy / libadwaita-web</div>
+                            <div class="row-subtitle">gnome 50 tokyo libadwaita web desktop interface with real hardware and git telemetry.</div>
+                        </div>
+                        <div class="row-suffix">
+                            <span class="badge badge-blue">web</span>
+                            <a class="adw-pill" href="https://github.com/theyh4t3-ashlxy/libadwaita-web" target="_blank" rel="noreferrer">github ↗</a>
+                        </div>
+                    </div>
+
+                    <!-- Local Only Roblox -->
+                    <div class="action-row">
+                        <div class="row-text">
+                            <div class="row-title">roblox (local only)</div>
                             <div class="row-subtitle">pls donate decompiled luau scripts, rbxl projects, and donation clone animations.</div>
                         </div>
                         <div class="row-suffix">
-                            <span class="badge badge-yellow">luau</span>
-                        </div>
-                    </div>
-
-                    <div class="action-row">
-                        <div class="row-text">
-                            <div class="row-title">rust</div>
-                            <div class="row-subtitle">rust 2024 edition crate. initialized august 12, currently 0 commits on master.</div>
-                        </div>
-                        <div class="row-suffix">
-                            <span class="badge badge-red">untouched</span>
+                            <span class="badge badge-yellow">excluded from git</span>
                         </div>
                     </div>
                 </div>
@@ -263,13 +321,13 @@
                     </div>
 
                     <div class="action-row">
-                        <span class="status-dot red"></span>
+                        <span class="status-dot green"></span>
                         <div class="row-text">
-                            <div class="row-title">err_abandoned_crate</div>
-                            <div class="row-subtitle">rust crate sitting in ~/Projects/rust with zero commits since august. untouched side project graveyard.</div>
+                            <div class="row-title">err_smart_fridge_doom</div>
+                            <div class="row-subtitle">can the samsung fridge run doom? yes it does. rust crate finally pushed to github.</div>
                         </div>
                         <div class="row-suffix">
-                            <span class="badge badge-red">skill issue</span>
+                            <span class="badge badge-green">pushed</span>
                         </div>
                     </div>
 
