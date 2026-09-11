@@ -1,6 +1,6 @@
 /**
  * ashley_os desktop controller
- * libadwaita-compliant window manager, navigation, and expander rows
+ * gnome 50 shell runtime, libadwaita splitview & window management
  */
 
 (() => {
@@ -9,13 +9,6 @@
     // Top bar clock service
     const Clock = {
         element: document.getElementById('clock'),
-        formatter: new Intl.DateTimeFormat('en-US', {
-            month: 'short',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false
-        }),
 
         init() {
             if (!this.element) return;
@@ -24,17 +17,140 @@
         },
 
         update() {
-            const formatted = this.formatter.format(new Date()).toLowerCase();
-            this.element.textContent = formatted;
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+            this.element.innerHTML = `<span>${dateStr}</span><span class="clock-time">${timeStr}</span>`;
         }
     };
 
-    // Navigation and view switching
+    // AdwToast notification bus
+    const Toast = {
+        container: document.getElementById('toast-overlay'),
+        timeoutId: null,
+
+        show(message, duration = 2400) {
+            if (!this.container) return;
+            clearTimeout(this.timeoutId);
+
+            this.container.textContent = message;
+            this.container.classList.add('active');
+
+            this.timeoutId = setTimeout(() => {
+                this.container.classList.remove('active');
+            }, duration);
+        }
+    };
+
+    // Dynamic GNOME 50 workspace controller
+    const Workspaces = {
+        indicator: document.querySelector('.workspace-indicator'),
+        dots: document.querySelectorAll('.workspace-dot'),
+        current: 1,
+
+        init() {
+            if (!this.indicator) return;
+
+            this.dots.forEach(dot => {
+                dot.addEventListener('click', () => {
+                    const wsIndex = parseInt(dot.getAttribute('data-workspace'), 10);
+                    this.switchTo(wsIndex);
+                });
+            });
+
+            // gnome 50 scroll-wheel workspace paging
+            this.indicator.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                if (e.deltaY > 0 && this.current < this.dots.length) {
+                    this.switchTo(this.current + 1);
+                } else if (e.deltaY < 0 && this.current > 1) {
+                    this.switchTo(this.current - 1);
+                }
+            }, { passive: false });
+        },
+
+        switchTo(index) {
+            if (index === this.current) {
+                if (WindowManager.windowEl.classList.contains('closed')) {
+                    WindowManager.reopen();
+                }
+                return;
+            }
+
+            this.current = index;
+            this.dots.forEach(dot => {
+                const active = parseInt(dot.getAttribute('data-workspace'), 10) === index;
+                dot.classList.toggle('active', active);
+                if (active) dot.setAttribute('aria-current', 'page');
+                else dot.removeAttribute('aria-current');
+            });
+
+            if (this.current === 1) {
+                WindowManager.reopen();
+            } else {
+                WindowManager.minimizeSilent();
+                Toast.show(`Switched to workspace ${index}`);
+            }
+        }
+    };
+
+    // Libadwaita accent color preset selector
+    const Accent = {
+        init() {
+            const saved = localStorage.getItem('adw-accent') || 'blue';
+            this.apply(saved);
+
+            document.addEventListener('click', (e) => {
+                const dot = e.target.closest('.accent-dot');
+                if (!dot) return;
+                const accent = dot.getAttribute('data-accent');
+                if (accent) {
+                    this.apply(accent);
+                    Toast.show(`Accent color set to ${accent}`);
+                }
+            });
+        },
+
+        apply(accent) {
+            document.body.setAttribute('data-accent', accent);
+            localStorage.setItem('adw-accent', accent);
+            document.querySelectorAll('.accent-dot').forEach(dot => {
+                dot.classList.toggle('active', dot.getAttribute('data-accent') === accent);
+            });
+        }
+    };
+
+    // Live search filter for preferences rows
+    const SearchFilter = {
+        input: document.getElementById('telemetry-filter'),
+
+        init() {
+            if (!this.input) return;
+
+            this.input.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                const rows = document.querySelectorAll('.action-row, details.expander-row');
+
+                rows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    const matches = !query || text.includes(query);
+                    row.style.display = matches ? '' : 'none';
+
+                    // auto-expand collapsed details when search matches so user doesnt scream
+                    if (row.tagName === 'DETAILS' && query && matches) {
+                        row.open = true;
+                    }
+                });
+            });
+        }
+    };
+
+    // Navigation and splitview switching
     const Navigation = {
         meta: {
-            profile: { title: 'about ashley', subtitle: 'thinkpad t16 · hardware & platform' },
-            projects: { title: 'active repositories', subtitle: 'github & local projects' },
-            bugs: { title: 'anomalies & git blame', subtitle: 'commit ledger & issues' }
+            profile: { title: 'About Ashley', subtitle: 'Hardware & platform telemetry' },
+            projects: { title: 'Repositories', subtitle: 'Published GitHub projects' },
+            bugs: { title: 'Commit Ledger & Anomalies', subtitle: 'Runtime bugs and fixed regressions' }
         },
         sidebar: document.getElementById('sidebar'),
         overlay: document.getElementById('mobile-overlay'),
@@ -55,11 +171,22 @@
                     this.toggleSidebar();
                 }
 
-                // AdwExpanderRow toggle
-                const expanderHeader = event.target.closest('.expander-header');
-                if (expanderHeader) {
-                    const row = expanderHeader.closest('.expander-row');
-                    if (row) row.classList.toggle('open');
+                // Clipboard copy button
+                const copyBtn = event.target.closest('.copy-btn');
+                if (copyBtn) {
+                    const val = copyBtn.getAttribute('data-copy');
+                    if (val) {
+                        navigator.clipboard.writeText(val).then(() => {
+                            Toast.show(`Copied: "${val}"`);
+                        }).catch(() => {
+                            Toast.show('Failed to write clipboard');
+                        });
+                    }
+                }
+
+                // Quick settings capsule click
+                if (event.target.closest('#quick-settings')) {
+                    Toast.show('Performance mode · Wi-Fi active · 79% battery');
                 }
             });
         },
@@ -69,14 +196,21 @@
             if (!targetPage) return;
 
             this.pages.forEach(page => page.classList.remove('active'));
-            this.navItems.forEach(item => item.classList.remove('active'));
+            this.navItems.forEach(item => {
+                item.classList.remove('active');
+                item.setAttribute('aria-selected', 'false');
+            });
 
             targetPage.classList.add('active');
             if (activeBtn) {
                 activeBtn.classList.add('active');
+                activeBtn.setAttribute('aria-selected', 'true');
             } else {
                 const matchingBtn = document.querySelector(`[data-nav-target="${pageId}"]`);
-                if (matchingBtn) matchingBtn.classList.add('active');
+                if (matchingBtn) {
+                    matchingBtn.classList.add('active');
+                    matchingBtn.setAttribute('aria-selected', 'true');
+                }
             }
 
             const info = this.meta[pageId];
@@ -93,25 +227,20 @@
         toggleSidebar() {
             if (!this.sidebar) return;
             this.sidebar.classList.toggle('open');
-            if (this.overlay) {
-                this.overlay.classList.toggle('active');
-            }
+            if (this.overlay) this.overlay.classList.toggle('active');
         },
 
         closeSidebar() {
             if (!this.sidebar) return;
             this.sidebar.classList.remove('open');
-            if (this.overlay) {
-                this.overlay.classList.remove('active');
-            }
+            if (this.overlay) this.overlay.classList.remove('active');
         }
     };
 
-    // Window controller (drag, bounds, close, unminimize)
+    // Window controller
     const WindowManager = {
         windowEl: document.getElementById('main-window'),
         header: document.getElementById('drag-handle'),
-        reopenPill: document.getElementById('reopen-pill'),
         isDragging: false,
         startX: 0,
         startY: 0,
@@ -130,18 +259,12 @@
                 if (event.target.closest('[data-action="close-window"]')) {
                     this.close();
                 }
-                if (event.target.closest('[data-action="reopen-window"]')) {
-                    this.reopen();
-                }
             });
 
-            // Keyboard navigation
             window.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     if (Navigation.sidebar && Navigation.sidebar.classList.contains('open')) {
                         Navigation.closeSidebar();
-                    } else {
-                        this.close();
                     }
                 }
             });
@@ -149,12 +272,14 @@
 
         onPointerDown(e) {
             if (window.innerWidth <= 768) return;
-            if (e.target.closest('button') || e.target.closest('.control') || e.target.closest('.hamburger') || e.target.closest('a')) return;
+            if (e.target.closest('button') || e.target.closest('.control') || e.target.closest('a') || e.target.closest('input')) return;
 
             this.isDragging = true;
             this.startX = e.clientX - this.xOffset;
             this.startY = e.clientY - this.yOffset;
             document.body.classList.add('dragging');
+
+            // pointer capture fixes random cursor drops during drags
             this.header.setPointerCapture(e.pointerId);
         },
 
@@ -164,7 +289,6 @@
             const currentX = e.clientX - this.startX;
             const currentY = e.clientY - this.startY;
 
-            // Bounding box clamping
             const maxX = Math.max(20, (window.innerWidth - this.windowEl.offsetWidth) / 2 + 100);
             const maxY = Math.max(20, (window.innerHeight - this.windowEl.offsetHeight) / 2 + 80);
 
@@ -186,22 +310,24 @@
 
         close() {
             this.windowEl.classList.add('closed');
-            if (this.reopenPill) {
-                this.reopenPill.classList.add('visible');
-            }
+            Toast.show('Window closed · Click Workspace 1 to restore');
+        },
+
+        minimizeSilent() {
+            this.windowEl.classList.add('closed');
         },
 
         reopen() {
             this.windowEl.classList.remove('closed');
-            if (this.reopenPill) {
-                this.reopenPill.classList.remove('visible');
-            }
         }
     };
 
-    // Boot
     document.addEventListener('DOMContentLoaded', () => {
         Clock.init();
+        Toast.init?.();
+        Workspaces.init();
+        Accent.init();
+        SearchFilter.init();
         Navigation.init();
         WindowManager.init();
     });

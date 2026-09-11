@@ -3,103 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ashley — gnome 50 / hyprland</title>
+    <title>ashley — neurodesk / tokyo</title>
     <link rel="stylesheet" href="style.css">
     <script src="app.js" defer></script>
 </head>
-<body>
+<body data-accent="blue">
 
-<!-- GNOME 50 Shell Top Bar -->
+<!-- gnome 50 shell top bar -->
 <header class="top-bar">
-    <div class="top-bar-section">
-        <div class="top-bar-item">activities</div>
-        <button id="reopen-pill" class="reopen-pill" data-action="reopen-window">
-            <span>●</span> ashley_os
+    <div class="top-bar-section left">
+        <nav class="workspace-indicator" aria-label="workspaces">
+            <button class="workspace-dot active" data-workspace="1" aria-label="workspace 1" aria-current="page"></button>
+            <button class="workspace-dot" data-workspace="2" aria-label="workspace 2"></button>
+            <button class="workspace-dot" data-workspace="3" aria-label="workspace 3"></button>
+            <button class="workspace-dot" data-workspace="4" aria-label="workspace 4"></button>
+        </nav>
+    </div>
+
+    <div class="top-bar-section center">
+        <button class="top-bar-clock" id="clock" aria-label="date and time">
+            <span>sep 11</span>
+            <span class="clock-time">23:35</span>
         </button>
     </div>
 
-    <div class="top-bar-clock" id="clock">fetching...</div>
-
-    <div class="top-bar-section">
-        <div class="quick-settings-pill" title="Quick Settings">
-            <!-- Wi-Fi icon -->
-            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
-            <!-- Volume icon -->
-            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-            <!-- Battery icon -->
-            <span style="display: inline-flex; align-items: center; gap: 4px;">
-                <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2"><rect x="2" y="7" width="16" height="10" rx="2" ry="2"></rect><line x1="22" y1="11" x2="22" y2="13"></line></svg>
-                <span>79%</span>
+    <div class="top-bar-section right">
+        <button class="quick-settings-pill" id="quick-settings" aria-label="quick settings menu" aria-expanded="false">
+            <svg class="indicator-icon power-profile" viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+                <path d="M8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1zm0 2a5 5 0 0 1 5 5c0 1.05-.32 2.02-.87 2.83l-1.46-1.46a3 3 0 0 0 .33-1.37 3 3 0 0 0-3-3V3zm-1 3v2.59l2.71 2.7-.71.71L6 9V6h1z"/>
+            </svg>
+            <svg class="indicator-icon" viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+                <path d="M8 12.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm-3.5-3a5 5 0 0 1 7 0l-1 1a3.5 3.5 0 0 0-5 0l-1-1zm-3-3a9 9 0 0 1 13 0l-1 1a7.5 7.5 0 0 0-11 0l-1-1z"/>
+            </svg>
+            <svg class="indicator-icon" viewBox="0 0 16 16" width="14" height="14" fill="currentColor">
+                <path d="M9 2.5v11l-4-3H2v-5h3l4-3zm2 2.5a5 5 0 0 1 0 6l-.8-.8a4 4 0 0 0 0-4.4l.8-.8z"/>
+            </svg>
+            <span class="battery-group">
+                <svg class="indicator-icon" viewBox="0 0 16 16" width="15" height="14" fill="currentColor">
+                    <path d="M2 4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H2zm13 3a1 1 0 0 1 1 1v0a1 1 0 0 1-1 1V7z"/>
+                </svg>
+                <span class="battery-text">79%</span>
             </span>
-        </div>
+        </button>
     </div>
 </header>
 
-<!-- Adwaita Window Application -->
+<!-- adwaita window frame -->
 <main class="window" id="main-window">
 
-    <!-- Mobile Drawer Backdrop -->
+    <div class="adw-toast-overlay" id="toast-overlay" aria-live="polite"></div>
     <div class="mobile-overlay" id="mobile-overlay" data-action="toggle-sidebar"></div>
 
-    <!-- AdwNavigationSplitView Sidebar -->
+    <!-- sidebar navigation splitview -->
     <aside class="sidebar-container" id="sidebar">
         <div class="headerbar sidebar-headerbar">
             <span class="sidebar-title">ashley_os</span>
-            <span class="badge badge-blue">gnome 50 HIG</span>
+            <span class="badge badge-accent">tokyo.r0</span>
         </div>
 
-        <nav>
-            <button class="nav-item active" data-nav-target="profile">
-                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none"><circle cx="12" cy="8" r="4"></circle><path d="M4 20c0-4 4-7 8-7s8 3 8 7"></path></svg>
-                <span>profile & telemetry</span>
+        <div class="sidebar-search">
+            <div class="adw-entry">
+                <svg viewBox="0 0 16 16" width="14" height="14" fill="currentColor" opacity="0.6"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
+                <input type="text" id="telemetry-filter" placeholder="filter telemetry & daemons…" autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+
+        <nav class="adw-nav-list" role="tablist">
+            <button class="nav-item active" role="tab" aria-selected="true" data-nav-target="profile">
+                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><circle cx="12" cy="8" r="4"></circle><path d="M4 20c0-4 4-7 8-7s8 3 8 7"></path></svg>
+                <span>telemetry & silicon</span>
             </button>
-            <button class="nav-item" data-nav-target="projects">
-                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
-                <span>github projects</span>
+            <button class="nav-item" role="tab" aria-selected="false" data-nav-target="projects">
+                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                <span>repos & payloads</span>
             </button>
-            <button class="nav-item" data-nav-target="bugs">
-                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none"><rect x="8" y="6" width="8" height="14" rx="4"></rect><path d="M6 10h2m8 0h2m-10 4h2m8 0h2m-10 4h2m8 0h2M9 6V4m6 2V4"></path></svg>
-                <span>anomalies</span>
+            <button class="nav-item" role="tab" aria-selected="false" data-nav-target="bugs">
+                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><rect x="8" y="6" width="8" height="14" rx="4"></rect><path d="M6 10h2m8 0h2m-10 4h2m8 0h2m-10 4h2m8 0h2M9 6V4m6 2V4"></path></svg>
+                <span>anomalies & chaos</span>
+                <span class="badge badge-pill">1 open</span>
             </button>
         </nav>
 
         <div class="sidebar-footer">
-            thinkpad t16 · inxi telemetry · libadwaita
+            <span>thinkpad t16 · bare metal libadwaita</span>
         </div>
     </aside>
 
-    <!-- AdwNavigationSplitView Content -->
+    <!-- content viewport -->
     <section class="main-view">
         <header class="headerbar content-headerbar" id="drag-handle">
-            <button class="hamburger" data-action="toggle-sidebar" aria-label="Toggle navigation">☰</button>
+            <button class="adw-flat-button hamburger" data-action="toggle-sidebar" aria-label="toggle navigation">
+                <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor"><path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/></svg>
+            </button>
+
             <div class="title-widget">
-                <span class="title" id="header-title">about ashley</span>
+                <span class="title" id="header-title">telemetry matrix</span>
                 <span class="title-subtitle" id="header-subtitle">thinkpad t16 · hardware & platform</span>
             </div>
+
             <div class="window-controls">
-                <button class="control" data-action="close-window" aria-label="Close window">
-                    <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                <button class="control close" data-action="close-window" aria-label="close window">
+                    <svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor"><path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854z"/></svg>
                 </button>
             </div>
         </header>
 
         <div class="content-area">
 
-            <!-- Profile & Granular Inxi Telemetry View -->
+            <!-- profile & telemetry -->
             <article id="profile" class="content-page active">
                 <div class="profile-banner">
-                    <div class="avatar-circle">👩‍💻</div>
+                    <div class="avatar-circle" role="img" aria-label="avatar">👩‍💻</div>
                     <h1 class="profile-name">ashley@lost</h1>
                     <div class="profile-tag">
-                        <span>ThinkPad T16 Gen 1 (21BWS23200)</span>
+                        <span>thinkpad t16 gen 1 (21bws23200)</span>
                         <span>•</span>
-                        <span>Arch Linux x86_64</span>
+                        <span>arch linux (x86_64)</span>
                     </div>
                 </div>
 
                 <div class="group-header">
-                    <div class="group-title">system & firmware</div>
-                    <div class="group-description">granular telemetry queried via inxi -Fxz</div>
+                    <div class="group-title">photon accents</div>
+                    <div class="group-description">libadwaita dynamic subsurface tint</div>
+                </div>
+
+                <div class="boxed-list">
+                    <div class="action-row">
+                        <div class="row-text">
+                            <div class="row-title">accent color</div>
+                            <div class="row-subtitle">palette highlight broadcast</div>
+                        </div>
+                        <div class="row-suffix accent-picker">
+                            <button class="accent-dot blue active" data-accent="blue" aria-label="blue accent"></button>
+                            <button class="accent-dot teal" data-accent="teal" aria-label="teal accent"></button>
+                            <button class="accent-dot green" data-accent="green" aria-label="green accent"></button>
+                            <button class="accent-dot yellow" data-accent="yellow" aria-label="yellow accent"></button>
+                            <button class="accent-dot orange" data-accent="orange" aria-label="orange accent"></button>
+                            <button class="accent-dot purple" data-accent="purple" aria-label="purple accent"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group-header">
+                    <div class="group-title">bare metal & firmware</div>
+                    <div class="group-description">telemetry queried via inxi -fxz</div>
                 </div>
 
                 <div class="boxed-list">
@@ -108,11 +155,14 @@
                             <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                         </div>
                         <div class="row-text">
-                            <div class="row-title">kernel & compiler</div>
-                            <div class="row-subtitle">Linux 7.2.3-arch1-3 (x86_64) · GCC 16.2.1 · Arch rolling</div>
+                            <div class="row-title">kernel & toolchain</div>
+                            <div class="row-subtitle">linux 7.2.3-arch1-3 (x86_64) · gcc 16.2.1</div>
                         </div>
                         <div class="row-suffix">
-                            <span class="badge badge-blue">archlinux</span>
+                            <span class="badge badge-accent">arch</span>
+                            <button class="adw-flat-button copy-btn" data-copy="linux 7.2.3-arch1-3 (x86_64)" title="copy string">
+                                <svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg>
+                            </button>
                         </div>
                     </div>
 
@@ -121,11 +171,11 @@
                             <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
                         </div>
                         <div class="row-text">
-                            <div class="row-title">desktop & compositor</div>
-                            <div class="row-subtitle">Hyprland 0.56.2 (Wayland) + Xwayland 24.1.13 · quickshell</div>
+                            <div class="row-title">compositor & shell</div>
+                            <div class="row-subtitle">hyprland 0.56.2 (wayland) + quickshell</div>
                         </div>
                         <div class="row-suffix">
-                            <span class="badge badge-purple">wayland</span>
+                            <span class="badge badge-accent">wayland</span>
                         </div>
                     </div>
 
@@ -135,207 +185,197 @@
                         </div>
                         <div class="row-text">
                             <div class="row-title">uefi & firmware</div>
-                            <div class="row-subtitle">LENOVO v: N3BET70W (1.48) date: 05/14/2026</div>
+                            <div class="row-subtitle">lenovo v: n3bet70w (1.48) 05/14/2026</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="group-header">
-                    <div class="group-title">processor & graphics (inxi)</div>
-                    <div class="group-description">alder lake compute and dual hybrid gpus</div>
+                    <div class="group-title">compute & silicon</div>
+                    <div class="group-description">alder lake cores and dual hybrid gpus</div>
                 </div>
 
                 <div class="boxed-list">
-                    <!-- Expander Row for CPU -->
-                    <div class="expander-row open">
-                        <div class="expander-header">
-                            <svg class="expander-arrow" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <details class="expander-row" open>
+                        <summary class="expander-header">
+                            <svg class="expander-arrow" viewBox="0 0 16 16" width="12" height="12" fill="currentColor"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
                             <div class="row-text">
-                                <div class="row-title">12th Gen Intel Core i7-1260P</div>
-                                <div class="row-subtitle">12-core (4 P-cores + 8 E-cores, 16 threads) · 4.70 GHz peak</div>
+                                <div class="row-title">12th gen intel core i7-1260p</div>
+                                <div class="row-subtitle">12-core (4p + 8e, 16 threads) · 4.70 ghz boost</div>
                             </div>
-                            <span class="badge badge-green">18 MiB L3</span>
-                        </div>
+                            <span class="badge badge-accent">18 mib l3</span>
+                        </summary>
                         <div class="expander-body">
-                            <div class="sub-row"><span class="sub-key">architecture:</span><span class="sub-val">Alder Lake-P (rev 3)</span></div>
-                            <div class="sub-row"><span class="sub-key">cache sizes:</span><span class="sub-val">L1: 1.1 MiB · L2: 9 MiB · L3: 18 MiB</span></div>
-                            <div class="sub-row"><span class="sub-key">clock speeds:</span><span class="sub-val">400 MHz min / 4700 MHz boost</span></div>
+                            <div class="sub-row"><span class="sub-key">architecture:</span><span class="sub-val">alder lake-p (rev 3)</span></div>
+                            <div class="sub-row"><span class="sub-key">cache sizes:</span><span class="sub-val">l1: 1.1 mib · l2: 9 mib · l3: 18 mib</span></div>
+                            <div class="sub-row"><span class="sub-key">clock bounds:</span><span class="sub-val">400 mhz floor / 4700 mhz peak</span></div>
                             <div class="sub-row"><span class="sub-key">bogomips:</span><span class="sub-val">79872</span></div>
                         </div>
-                    </div>
+                    </details>
 
-                    <!-- Expander Row for Dual GPUs -->
-                    <div class="expander-row">
-                        <div class="expander-header">
-                            <svg class="expander-arrow" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <details class="expander-row">
+                        <summary class="expander-header">
+                            <svg class="expander-arrow" viewBox="0 0 16 16" width="12" height="12" fill="currentColor"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
                             <div class="row-text">
-                                <div class="row-title">hybrid dual graphics</div>
-                                <div class="row-subtitle">Intel Iris Xe (i915) + NVIDIA GeForce MX550 [TU117M]</div>
+                                <div class="row-title">hybrid dual silicon</div>
+                                <div class="row-subtitle">intel iris xe (i915) + nvidia geforce mx550 [tu117m]</div>
                             </div>
-                            <span class="badge badge-purple">dual gpu</span>
-                        </div>
+                            <span class="badge badge-accent">switcheroo</span>
+                        </summary>
                         <div class="expander-body">
-                            <div class="sub-row"><span class="sub-key">integrated:</span><span class="sub-val">Intel Alder Lake-P GT2 (i915 / iris)</span></div>
-                            <div class="sub-row"><span class="sub-key">discrete:</span><span class="sub-val">NVIDIA GeForce MX550 (driver 610.57.04)</span></div>
-                            <div class="sub-row"><span class="sub-key">opengl api:</span><span class="sub-val">Mesa 26.2.2-arch1.1 (OpenGL 4.6.0)</span></div>
-                            <div class="sub-row"><span class="sub-key">displays:</span><span class="sub-val">1: 1920x1080 · 2: 1920x1200</span></div>
+                            <div class="sub-row"><span class="sub-key">integrated:</span><span class="sub-val">intel alder lake-p gt2 (iris)</span></div>
+                            <div class="sub-row"><span class="sub-key">discrete:</span><span class="sub-val">nvidia geforce mx550 (driver 610.57.04)</span></div>
+                            <div class="sub-row"><span class="sub-key">mesa driver:</span><span class="sub-val">mesa 26.2.2-arch1.1 (opengl 4.6.0)</span></div>
+                            <div class="sub-row"><span class="sub-key">displays:</span><span class="sub-val">1080p internal + 1200p external</span></div>
                         </div>
-                    </div>
+                    </details>
 
-                    <!-- Expander Row for Storage & Sensors -->
-                    <div class="expander-row">
-                        <div class="expander-header">
-                            <svg class="expander-arrow" viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    <details class="expander-row">
+                        <summary class="expander-header">
+                            <svg class="expander-arrow" viewBox="0 0 16 16" width="12" height="12" fill="currentColor"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
                             <div class="row-text">
-                                <div class="row-title">storage, battery & thermals</div>
-                                <div class="row-subtitle">Samsung NVMe Btrfs · 79% battery · 64°C · 3070 RPM fan</div>
+                                <div class="row-title">storage, power & thermals</div>
+                                <div class="row-subtitle">samsung nvme btrfs · 79% juice · 64°c · 3070 rpm</div>
                             </div>
-                            <span class="badge badge-yellow">inxi sensors</span>
-                        </div>
+                            <span class="badge badge-accent">sensors</span>
+                        </summary>
                         <div class="expander-body">
-                            <div class="sub-row"><span class="sub-key">primary nvme:</span><span class="sub-val">Samsung MZVL4512HBLU 476.94 GiB (47.9°C)</span></div>
-                            <div class="sub-row"><span class="sub-key">filesystem:</span><span class="sub-val">Btrfs (root/home/var) + 4 GiB zram</span></div>
-                            <div class="sub-row"><span class="sub-key">external ssd:</span><span class="sub-val">Seagate One Touch 931.51 GiB (ntfs3)</span></div>
-                            <div class="sub-row"><span class="sub-key">battery health:</span><span class="sub-val">34 Wh (79%) · 82% condition (SMP 5B10W51869)</span></div>
-                            <div class="sub-row"><span class="sub-key">thermal & fan:</span><span class="sub-val">CPU 64.0°C · Fan: 3070 RPM</span></div>
+                            <div class="sub-row"><span class="sub-key">primary nvme:</span><span class="sub-val">samsung mzvl4512hblu 476.94 gib</span></div>
+                            <div class="sub-row"><span class="sub-key">filesystem:</span><span class="sub-val">btrfs (root/home/var) + 4 gib zram</span></div>
+                            <div class="sub-row"><span class="sub-key">battery health:</span><span class="sub-val">34 wh (79%) · 82% condition</span></div>
+                            <div class="sub-row"><span class="sub-key">cooling:</span><span class="sub-val">cpu 64.0°c · fan at 3070 rpm</span></div>
                         </div>
-                    </div>
+                    </details>
                 </div>
             </article>
 
-            <!-- Projects View -->
+            <!-- repositories -->
             <article id="projects" class="content-page">
                 <div class="group-header">
-                    <div class="group-title">github repositories (@theyh4t3-ashlxy)</div>
-                    <div class="group-description">projects published to github (roblox excluded)</div>
+                    <div class="group-title">git repos & payloads</div>
+                    <div class="group-description">published codebases (@theyh4t3-ashlxy)</div>
                 </div>
 
                 <div class="boxed-list">
                     <div class="action-row">
                         <div class="row-text">
                             <div class="row-title">theyh4t3-ashlxy / my_hyprland_dots</div>
-                            <div class="row-subtitle">hyprland dots: the hallucination edition. quickshell, pipewire, google material symbols, pure #000000.</div>
+                            <div class="row-subtitle">quickshell, pipewire, google material symbols, pure pitch black.</div>
                         </div>
                         <div class="row-suffix">
-                            <span class="badge badge-blue">main</span>
-                            <a class="adw-pill" href="https://github.com/theyh4t3-ashlxy/my_hyprland_dots" target="_blank" rel="noreferrer">github ↗</a>
+                            <a class="adw-pill" href="https://github.com/theyh4t3-ashlxy/my_hyprland_dots" target="_blank" rel="noreferrer">open ↗</a>
                         </div>
                     </div>
 
                     <div class="action-row">
                         <div class="row-text">
                             <div class="row-title">theyh4t3-ashlxy / fan-control</div>
-                            <div class="row-subtitle">thinkpad t16 hardware fan daemon and dbus service (org.thinkpad.FanControl).</div>
+                            <div class="row-subtitle">thinkpad t16 hardware fan daemon and dbus controller.</div>
                         </div>
                         <div class="row-suffix">
-                            <span class="badge badge-green">daemon</span>
-                            <a class="adw-pill" href="https://github.com/theyh4t3-ashlxy/fan-control" target="_blank" rel="noreferrer">github ↗</a>
+                            <a class="adw-pill" href="https://github.com/theyh4t3-ashlxy/fan-control" target="_blank" rel="noreferrer">open ↗</a>
                         </div>
                     </div>
 
                     <div class="action-row">
                         <div class="row-text">
                             <div class="row-title">theyh4t3-ashlxy / keygen</div>
-                            <div class="row-subtitle">vaultforge: modular cryptographic engine with custom generators, patchers, and libadwaita gtk4 ui.</div>
+                            <div class="row-subtitle">vaultforge cryptographic engine with gtk4 libadwaita ui.</div>
                         </div>
                         <div class="row-suffix">
-                            <span class="badge badge-purple">python</span>
-                            <a class="adw-pill" href="https://github.com/theyh4t3-ashlxy/keygen" target="_blank" rel="noreferrer">github ↗</a>
+                            <a class="adw-pill" href="https://github.com/theyh4t3-ashlxy/keygen" target="_blank" rel="noreferrer">open ↗</a>
                         </div>
                     </div>
 
                     <div class="action-row">
                         <div class="row-text">
                             <div class="row-title">theyh4t3-ashlxy / rust</div>
-                            <div class="row-subtitle">smart fridge doom runner struct. rust 2024 edition crate finally with an initial commit.</div>
+                            <div class="row-subtitle">smart fridge doom runner crate. rust 2024 edition.</div>
                         </div>
                         <div class="row-suffix">
-                            <span class="badge badge-green">committed</span>
-                            <a class="adw-pill" href="https://github.com/theyh4t3-ashlxy/rust" target="_blank" rel="noreferrer">github ↗</a>
+                            <a class="adw-pill" href="https://github.com/theyh4t3-ashlxy/rust" target="_blank" rel="noreferrer">open ↗</a>
                         </div>
                     </div>
 
                     <div class="action-row">
                         <div class="row-text">
                             <div class="row-title">theyh4t3-ashlxy / libadwaita-web</div>
-                            <div class="row-subtitle">gnome 50 tokyo libadwaita web desktop interface with real hardware and git telemetry.</div>
+                            <div class="row-subtitle">tokyo HIG web desktop interface with real hardware telemetry.</div>
                         </div>
                         <div class="row-suffix">
-                            <span class="badge badge-blue">web</span>
-                            <a class="adw-pill" href="https://github.com/theyh4t3-ashlxy/libadwaita-web" target="_blank" rel="noreferrer">github ↗</a>
+                            <a class="adw-pill" href="https://github.com/theyh4t3-ashlxy/libadwaita-web" target="_blank" rel="noreferrer">open ↗</a>
                         </div>
                     </div>
 
-                    <!-- Local Only Roblox -->
                     <div class="action-row">
                         <div class="row-text">
                             <div class="row-title">roblox (local only)</div>
-                            <div class="row-subtitle">pls donate decompiled luau scripts, rbxl projects, and donation clone animations.</div>
+                            <div class="row-subtitle">decompiled luau scripts, rbxl projects, and animation clones.</div>
                         </div>
                         <div class="row-suffix">
-                            <span class="badge badge-yellow">excluded from git</span>
+                            <span class="badge badge-yellow">local only</span>
                         </div>
                     </div>
                 </div>
             </article>
 
-            <!-- Bugs / Anomalies View -->
+            <!-- anomalies -->
             <article id="bugs" class="content-page">
                 <div class="group-header">
-                    <div class="group-title">git blame & anomalies</div>
-                    <div class="group-description">actual commit ledger history and unresolved issues</div>
+                    <div class="group-title">ledger of shame & anomalies</div>
+                    <div class="group-description">runtime bugs and fixed regressions</div>
                 </div>
 
                 <div class="boxed-list">
                     <div class="action-row">
-                        <span class="status-dot green"></span>
+                        <span class="status-dot green" aria-label="resolved"></span>
                         <div class="row-text">
                             <div class="row-title">err_recursive_binding_loop</div>
-                            <div class="row-subtitle">eradicated 50+ recursive qml binding loops in wallpaper browser before cpu melted.</div>
+                            <div class="row-subtitle">killed 50+ recursive qml loops in wallpaper browser before cpu melted.</div>
                         </div>
                         <div class="row-suffix">
-                            <span class="badge badge-green">237bbd9</span>
+                            <span class="badge badge-accent">237bbd9</span>
                         </div>
                     </div>
 
                     <div class="action-row">
-                        <span class="status-dot green"></span>
+                        <span class="status-dot green" aria-label="resolved"></span>
                         <div class="row-text">
                             <div class="row-title">err_bar_studio_homicide</div>
-                            <div class="row-subtitle">stopped bar studio instances from murdering each other on multi-monitor setups.</div>
+                            <div class="row-subtitle">stopped bar studio instances from murdering each other on multi-head.</div>
                         </div>
                         <div class="row-suffix">
-                            <span class="badge badge-green">c7cba32</span>
+                            <span class="badge badge-accent">c7cba32</span>
                         </div>
                     </div>
 
                     <div class="action-row">
-                        <span class="status-dot green"></span>
+                        <span class="status-dot green" aria-label="resolved"></span>
                         <div class="row-text">
                             <div class="row-title">err_ghost_pixels</div>
-                            <div class="row-subtitle">app launcher no longer renders at 0x0 invisible ghost pixels in the shadow realm.</div>
+                            <div class="row-subtitle">app launcher no longer renders at 0x0 invisible ghost coordinates.</div>
                         </div>
                         <div class="row-suffix">
-                            <span class="badge badge-green">resolved</span>
+                            <span class="badge badge-accent">resolved</span>
                         </div>
                     </div>
 
                     <div class="action-row">
-                        <span class="status-dot green"></span>
+                        <span class="status-dot green" aria-label="resolved"></span>
                         <div class="row-text">
                             <div class="row-title">err_smart_fridge_doom</div>
-                            <div class="row-subtitle">can the samsung fridge run doom? yes it does. rust crate finally pushed to github.</div>
+                            <div class="row-subtitle">can the samsung fridge run doom? yes it does. rust crate pushed.</div>
                         </div>
                         <div class="row-suffix">
-                            <span class="badge badge-green">pushed</span>
+                            <span class="badge badge-accent">pushed</span>
                         </div>
                     </div>
 
                     <div class="action-row">
-                        <span class="status-dot yellow"></span>
+                        <span class="status-dot yellow" aria-label="open"></span>
                         <div class="row-text">
                             <div class="row-title">err_low_caffeine</div>
-                            <div class="row-subtitle">cognitive function impaired. cold brew level critical. refill required.</div>
+                            <div class="row-subtitle">cold brew reservoir depleted. terminal panic imminent.</div>
                         </div>
                         <div class="row-suffix">
                             <span class="badge badge-yellow">open</span>
